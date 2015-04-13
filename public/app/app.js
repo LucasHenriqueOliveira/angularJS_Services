@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'ngCookies']);
 
     app.provider('books', ['constants', function (constants) {
 
@@ -28,9 +28,10 @@
 
     }]);
 
-    app.config(['booksProvider', 'constants', 'dataServiceProvider', '$routeProvider', function (booksProvider, constants, dataServiceProvider, $routeProvider) {
+    app.config(['booksProvider', 'constants', 'dataServiceProvider', '$routeProvider', '$logProvider', function (booksProvider, constants, dataServiceProvider, $routeProvider, $logProvider) {
 
         booksProvider.setIncludeVersionInTitle(true);
+        $logProvider.debugEnabled(false);
 
         $routeProvider
             .when('/', {

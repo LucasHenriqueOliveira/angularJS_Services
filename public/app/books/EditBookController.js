@@ -1,18 +1,13 @@
 (function () {
 
     angular.module('app')
-        .controller('EditBookController', ['$routeParams', 'books', EditBookController]);
+        .controller('EditBookController', ['$routeParams', 'books', '$cookies', '$cookieStore', EditBookController]);
 
-    function EditBookController($routeParams, books) {
+    function EditBookController($routeParams, books, $cookies, $cookieStore) {
         //console.log($routeParams.bookID);
 
         var vm = this;
 
-        vm.currentBook = books.filter(function(item) {
-            return item.book_id == $routeParams.bookID;
-        })[0];
-
-        /*
         vm.currentBook = books.filter(function(item) {
             return item.book_id == $routeParams.bookID;
         })[0];
@@ -24,7 +19,7 @@
         };
 
         $cookieStore.put('lastEdited', vm.currentBook);
-        */
+
     }
 
 }());
