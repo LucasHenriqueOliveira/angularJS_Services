@@ -10,20 +10,39 @@
 
         vm.appName = books.appName;
 
-        var booksPromise = dataService.getAllBooks();
-        var readersPromise = dataService.getAllReaders();
+        dataService.getAllBooks()
+            .then(getBooksSuccess)
+            .catch(errorCallback)
+            .finally(getAllBooksComplete);
 
-        $q.all([booksPromise, readersPromise])
-            .then(getAllDataSuccess)
-            .catch(getAllDataError);
-
-        function getAllDataSuccess(dataArray){
-            vm.allBooks = dataArray[0];
-            vm.allReaders = dataArray[1];
+        function getBooksSuccess(books) {
+            //throw 'error in success handler';
+            vm.allBooks = books;
         }
 
-        function getAllDataError(reason){
-            console.log(reason)
+        function getBooksNotification(notification) {
+            //console.log('Promise Notification: ' + notification);
+        }
+
+        function errorCallback(errorMsg) {
+            console.log('Error Message: ' + errorMsg);
+        }
+
+        function getAllBooksComplete() {
+            //console.log('getAllBooks has completed');
+        }
+
+        dataService.getAllReaders()
+            .then(getReadersSuccess)
+            .catch(errorCallback)
+            .finally(getAllReadersComplete);
+
+        function getReadersSuccess(readers) {
+            vm.allReaders = readers;
+        }
+
+        function getAllReadersComplete() {
+            //console.log('getAllReaders has completed');
         }
 
         vm.getBadge = badgeService.retrieveBadge;
