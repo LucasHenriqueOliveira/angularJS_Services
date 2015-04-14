@@ -28,10 +28,12 @@
 
     }]);
 
-    app.config(['booksProvider', 'constants', 'dataServiceProvider', '$routeProvider', '$logProvider', function (booksProvider, constants, dataServiceProvider, $routeProvider, $logProvider) {
+    app.config(['booksProvider', 'constants', 'dataServiceProvider', '$routeProvider', '$logProvider', '$httpProvider', function (booksProvider, constants, dataServiceProvider, $routeProvider, $logProvider, $httpProvider) {
 
         booksProvider.setIncludeVersionInTitle(true);
-        $logProvider.debugEnabled(false);
+        $logProvider.debugEnabled(true);
+
+        $httpProvider.interceptors.push('bookLoggerInterceptor');
 
         $routeProvider
             .when('/', {
