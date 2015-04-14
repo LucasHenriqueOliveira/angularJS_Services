@@ -1,10 +1,10 @@
 (function() {
 
     angular.module('app')
-        .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$cookies', '$cookieStore', '$log', BooksController]);
+        .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$cookies', '$cookieStore', '$log', '$route',BooksController]);
 
 
-    function BooksController(books, dataService, logger, badgeService, $q, $cookies, $cookieStore, $log) {
+    function BooksController(books, dataService, logger, badgeService, $q, $cookies, $cookieStore, $log, $route) {
 
         var vm = this;
 
@@ -50,11 +50,22 @@
         vm.favoriteBook = $cookies.favoriteBook;
         vm.lastEdited = $cookieStore.get('lastEdited');
 
-        $log.log("logging with log");
-        $log.info("logging with info");
-        $log.warn("logging with warn");
-        $log.error("logging with error");
-        $log.debug("logging with debug");
+        vm.deleteBook = function (bookID) {
+
+            dataService.deleteBook(bookID)
+                .then(deleteBookSuccess)
+                .catch(deleteBookError);
+
+        };
+
+        function deleteBookSuccess(message) {
+            $log.info(message);
+            $route.reload();
+        }
+
+        function deleteBookError(errorMessage) {
+            $log.error(errorMessage);
+        }
 
     }
 
