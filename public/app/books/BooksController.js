@@ -1,19 +1,21 @@
 (function() {
 
     angular.module('app')
-        .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$cookies', '$cookieStore', '$log', '$route',BooksController]);
+        .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$cookies', '$cookieStore', '$log', '$route', 'BooksResource', BooksController]);
 
 
-    function BooksController(books, dataService, logger, badgeService, $q, $cookies, $cookieStore, $log, $route) {
+    function BooksController(books, dataService, logger, badgeService, $q, $cookies, $cookieStore, $log, $route, BooksResource) {
 
         var vm = this;
 
         vm.appName = books.appName;
 
-        dataService.getAllBooks()
-            .then(getBooksSuccess)
-            .catch(errorCallback)
-            .finally(getAllBooksComplete);
+        //dataService.getAllBooks()
+        //    .then(getBooksSuccess)
+        //    .catch(errorCallback)
+        //    .finally(getAllBooksComplete);
+
+        vm.allBooks = BooksResource.query();
 
         function getBooksSuccess(books) {
             //throw 'error in success handler';
