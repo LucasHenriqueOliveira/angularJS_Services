@@ -49,6 +49,7 @@
 
         function getReadersSuccess(readers) {
             vm.allReaders = readers;
+            $log.awesome('All readers retrieved');
         }
 
         function getAllReadersComplete() {
